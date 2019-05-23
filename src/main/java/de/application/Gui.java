@@ -1,43 +1,95 @@
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
-public class Gui extends JPanel {
-	private JPanel chatPanel = new JPanel();
+public class Gui extends JPanel implements KeyListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private JPanel dataPanel = new JPanel();
 	private JPanel inputPanel = new JPanel();
 	private JButton sendButton = new JButton("Send");
-	private JTextField inputArea = new JTextField(50);
+	private JPanel labelPanel = new JPanel();
+	private JTextField inputText = new JTextField();
+
+	private String message;
 
 	public Gui() {
 		setPanels();
 		setLayout(new BorderLayout());
-		add(chatPanel, BorderLayout.CENTER);
-		add(inputPanel, BorderLayout.PAGE_END);
-
+		add(dataPanel, BorderLayout.CENTER);
+		add(inputPanel, BorderLayout.SOUTH);
 	}
 
 	private void setPanels() {
-		JPanel input = new JPanel();
+		labelPanel.setLayout(new GridLayout(1, 1));
+		labelPanel.setBorder(new EmptyBorder(0, 0, 0, 3));
+		labelPanel.add(inputText);
 
-		input.setLayout(new BorderLayout());
-		input.add(inputArea, BorderLayout.CENTER);
-		input.add(sendButton, BorderLayout.LINE_END);
+		sendButton.addActionListener(x -> sendMessage());
 
-		inputPanel.add(input);
+		inputPanel.setLayout(new BorderLayout());
+		inputPanel.setBorder(new EmptyBorder(0, 5, 4, 5));
+		inputPanel.add(labelPanel, BorderLayout.CENTER);
+		inputPanel.add(sendButton, BorderLayout.EAST);
+	}
+
+	private void sendMessage() {
+		if (!(inputText.getText().isBlank())) {
+			message = inputText.getText();
+		}
 	}
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Chat");
-		frame.setSize(900, 800);
-		Gui gui = new Gui();
-		frame.add(gui);
-		frame.setVisible(true);
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			JFrame frame = new JFrame("Chat");
+			frame.setSize(700, 800);
+			Gui gui = new Gui();
+			frame.add(gui);
+			frame.setLocationRelativeTo(null);
+			frame.setVisible(true);
+			frame.getRootPane().setDefaultButton(gui.sendButton);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+		        | UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			System.out.println("You just pressed the enter ");
+		}
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
