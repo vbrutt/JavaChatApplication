@@ -1,3 +1,5 @@
+package de.application;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
@@ -46,9 +48,10 @@ public class Gui extends JPanel implements KeyListener {
 	}
 
 	private void sendMessage() {
-		if (!(inputText.getText().isBlank())) {
-			message = inputText.getText();
-		}
+		// TODO: isBlank()
+//		if (!(inputText.getText().isBlank())) {
+//			message = inputText.getText();
+//		}
 	}
 
 	public static void main(String[] args) {
@@ -62,34 +65,26 @@ public class Gui extends JPanel implements KeyListener {
 			frame.setVisible(true);
 			frame.getRootPane().setDefaultButton(gui.sendButton);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-		        | UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
+				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			System.out.println("You just pressed the enter ");
 		}
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
-
 }

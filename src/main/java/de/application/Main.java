@@ -1,8 +1,13 @@
 package de.application;
 
 public class Main {
-	
 	public static void main(String[] args) {
-		System.out.println("Hello World");
+		try {
+			TestProject testProject = new TestProject();
+			testProject.doStuff();
+			testProject.dispose();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 	}
 }
