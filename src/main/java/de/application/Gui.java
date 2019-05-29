@@ -1,19 +1,21 @@
-package de.application;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-public class Gui extends JPanel implements KeyListener {
+public class Gui extends JPanel {
 	/**
 	 * 
 	 */
@@ -25,7 +27,8 @@ public class Gui extends JPanel implements KeyListener {
 	private JPanel labelPanel = new JPanel();
 	private JTextField inputText = new JTextField();
 
-	private String message;
+	private JTextField userMessage = new JTextField(inputText.getText().length());
+	private JPanel messagePanel = new JPanel();
 
 	public Gui() {
 		setPanels();
@@ -45,13 +48,24 @@ public class Gui extends JPanel implements KeyListener {
 		inputPanel.setBorder(new EmptyBorder(0, 5, 4, 5));
 		inputPanel.add(labelPanel, BorderLayout.CENTER);
 		inputPanel.add(sendButton, BorderLayout.EAST);
+
+		messagePanel.add(userMessage);
+
+		dataPanel.setLayout(new GridLayout(1, 2));
+		dataPanel.add(messagePanel);
+		messagePanel.setVisible(false);
+
 	}
 
 	private void sendMessage() {
-		// TODO: isBlank()
-//		if (!(inputText.getText().isBlank())) {
-//			message = inputText.getText();
-//		}
+		if (!(inputText.getText().isEmpty())) {
+			userMessage.setText(inputText.getText());
+			Border border = BorderFactory.createLineBorder(Color.BLUE);
+			userMessage.setBorder(border);
+			messagePanel.setVisible(true);
+			inputText.setText("");
+			add(dataPanel, BorderLayout.CENTER);
+		}
 	}
 
 	public static void main(String[] args) {
@@ -71,20 +85,4 @@ public class Gui extends JPanel implements KeyListener {
 		}
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			System.out.println("You just pressed the enter ");
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
 }
