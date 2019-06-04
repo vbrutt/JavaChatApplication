@@ -17,6 +17,7 @@ public class Server {
 	public void launchServer(int port) {
 		try {
 			ServerSocket serverSocket = new ServerSocket(port);
+			System.out.println("Starting server on port " + port + "...");
 			run(serverSocket);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -30,6 +31,7 @@ public class Server {
 	 * @throws IOException In case something goes terribly wrong.
 	 */
 	public void run(ServerSocket serverSocket) throws IOException {
+		System.out.println("Server has been started. Waiting for clients to connect...");
 		while (true) {
 			Socket client = serverSocket.accept();
 			String clientAddress = client.getInetAddress().getHostAddress();

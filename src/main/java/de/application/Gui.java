@@ -2,22 +2,17 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class Gui extends JPanel {
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -68,21 +63,20 @@ public class Gui extends JPanel {
 		}
 	}
 
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			JFrame frame = new JFrame("Chat");
-			frame.setSize(700, 800);
-			Gui gui = new Gui();
-			frame.add(gui);
-			frame.setLocationRelativeTo(null);
-			frame.setVisible(true);
-			frame.getRootPane().setDefaultButton(gui.sendButton);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-	}
-
+//	public static void main(String[] args) {
+//		try {
+//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//			JFrame frame = new JFrame("Chat");
+//			frame.setSize(700, 800);
+//			Gui gui = new Gui();
+//			frame.add(gui);
+//			frame.setLocationRelativeTo(null);
+//			frame.setVisible(true);
+//			frame.getRootPane().setDefaultButton(gui.sendButton);
+//			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+//				| UnsupportedLookAndFeelException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
