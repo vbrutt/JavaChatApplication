@@ -13,6 +13,7 @@ public class Server {
 	private InputStream input;
 	private OutputStream output;
 	private static final Logger LOG = Logger.getLogger(Server.class.getName());
+	private String clientAddress;
 
 	/**
 	 * Launches a server instance.
@@ -24,6 +25,10 @@ public class Server {
 		try {
 			this.serverSocket = new ServerSocket(port);
 			LOG.info("Starting server on port " + port + "...");
+
+			socket = serverSocket.accept();
+			clientAddress = socket.getInetAddress().getHostName();
+			LOG.info(clientAddress + " connected");
 		} catch (IOException e) {
 			LOG.info(e.getStackTrace().toString());
 		}
@@ -31,6 +36,7 @@ public class Server {
 
 	/**
 	 * Executes the server logic.
+	 * @param  
 	 *
 	 * @param serverSocket
 	 *            Server instance to use.
@@ -42,10 +48,6 @@ public class Server {
 
 		while (true) {
 			try {
-				socket = serverSocket.accept();
-				String clientAddress = socket.getInetAddress().getHostAddress();
-				LOG.info(clientAddress + " connected");
-
 				input = socket.getInputStream();
 				InputStreamReader iStreamReader = new InputStreamReader(input);
 
@@ -53,14 +55,16 @@ public class Server {
 				String message = reader.readLine();
 				LOG.info("Message received from client " + clientAddress + "is:  " + message);
 
-				// Wenn andere users connected sind, können wir damit Nachrichten an den client
+				// Wenn andere users connected sind, können wir damit
+				// Nachrichten an den client
 				// senden
 
 				/**
-				 * String returnMessage = "blabla" + "\n"; output = socket.getOutputStream();
-				 * OutputStreamWriter oStremWriter = new OutputStreamWriter(output);
-				 * BufferedWriter writer = new BufferedWriter(oStremWriter);
-				 * writer.write(returnMessage); writer.flush();
+				 * String returnMessage = "blabla" + "\n"; output =
+				 * socket.getOutputStream(); OutputStreamWriter oStremWriter =
+				 * new OutputStreamWriter(output); BufferedWriter writer = new
+				 * BufferedWriter(oStremWriter); writer.write(returnMessage);
+				 * writer.flush();
 				 */
 
 			} catch (IOException e) {
@@ -71,7 +75,7 @@ public class Server {
 	}
 
 	public static void main(String[] args) {
-		Server server = new Server(1337);
+		Server server = new Server(9090);
 		server.launchServer();
 	}
 }
