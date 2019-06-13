@@ -25,9 +25,10 @@ public class Server {
 		try {
 			this.serverSocket = new ServerSocket(port);
 			LOG.info("Starting server on port " + port + "...");
-
+			LOG.info("Server has been started. Waiting for clients to connect...");
 			socket = serverSocket.accept();
-			clientAddress = socket.getInetAddress().getHostName();
+			
+			clientAddress = socket.getInetAddress().getHostAddress();
 			LOG.info(clientAddress + " connected");
 		} catch (IOException e) {
 			LOG.info(e.getStackTrace().toString());
@@ -36,7 +37,8 @@ public class Server {
 
 	/**
 	 * Executes the server logic.
-	 * @param  
+	 * 
+	 * @param
 	 *
 	 * @param serverSocket
 	 *            Server instance to use.
@@ -44,9 +46,9 @@ public class Server {
 	 *             In case something goes terribly wrong.
 	 */
 	public void launchServer() {
-		LOG.info("Server has been started. Waiting for clients to connect...");
+		
 
-		while (true) {
+//		while (true) {
 			try {
 				input = socket.getInputStream();
 				InputStreamReader iStreamReader = new InputStreamReader(input);
@@ -60,18 +62,17 @@ public class Server {
 				// senden
 
 				/**
-				 * String returnMessage = "blabla" + "\n"; output =
-				 * socket.getOutputStream(); OutputStreamWriter oStremWriter =
-				 * new OutputStreamWriter(output); BufferedWriter writer = new
-				 * BufferedWriter(oStremWriter); writer.write(returnMessage);
-				 * writer.flush();
+				 * String returnMessage = "blabla" + "\n"; output = socket.getOutputStream();
+				 * OutputStreamWriter oStremWriter = new OutputStreamWriter(output);
+				 * BufferedWriter writer = new BufferedWriter(oStremWriter);
+				 * writer.write(returnMessage); writer.flush();
 				 */
 
 			} catch (IOException e) {
 				LOG.info(e.getStackTrace().toString());
 			}
 
-		}
+//		}
 	}
 
 	public static void main(String[] args) {

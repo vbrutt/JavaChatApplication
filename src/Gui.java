@@ -2,10 +2,13 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -14,7 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-public class ClientGui extends JPanel {
+public class Gui extends JPanel {
 	/**
 	 * 
 	 */
@@ -24,28 +27,26 @@ public class ClientGui extends JPanel {
 	private JPanel inputPanel = new JPanel();
 	private JButton sendButton = new JButton("Send");
 	private JPanel labelPanel = new JPanel();
-	protected JTextField inputText = new JTextField();
-	private String userName;
-	private Client client;
+	private JTextField inputText = new JTextField();
 
 	private JTextField userMessage = new JTextField(inputText.getText().length());
 	private JPanel messagePanel = new JPanel();
 
-	public ClientGui() {
-		createUserInputWindow();
+	public Gui() {
+		createClientWindow();
 		setPanels();
 		setLayout(new BorderLayout());
 		add(dataPanel, BorderLayout.CENTER);
 		add(inputPanel, BorderLayout.SOUTH);
 	}
 
-	private void createUserInputWindow() {
-		String userName = JOptionPane.showInputDialog(this, "Enter user name: ");
-		while (userName.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Please enter a valid user name", "WARNING", JOptionPane.ERROR_MESSAGE);
-			userName = JOptionPane.showInputDialog(this, "Enter user name: ");
-		}
-		setUserName(userName);
+	private void createClientWindow() {
+		JLabel userName = new JLabel("Enter username: ");
+		String userInput = JOptionPane.showInputDialog(null, userName, "", JOptionPane.INFORMATION_MESSAGE);
+		// TODO Fehlermeldung bei keiner Eingabe
+		// TODO iport in eingabefeld nach user name
+		int port = 0;
+		Client client = new Client(userInput, port);
 
 	}
 
@@ -69,55 +70,25 @@ public class ClientGui extends JPanel {
 
 	}
 
-	protected void sendMessage() {
-		if (!(inputText.getText().isEmpty())) {
-			client.sendMessage(inputText.getText());
-			userMessage.setText(inputText.getText());
-			Border border = BorderFactory.createLineBorder(Color.BLUE);
-			userMessage.setBorder(border);
-			messagePanel.setVisible(true);
-			inputText.setText("");
-			add(dataPanel, BorderLayout.CENTER);
-		}
+	private void sendMessage() {
+
 	}
 
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			JFrame frame = new JFrame("Chat");
+			frame.setSize(700, 800);
+			Gui gui = new Gui();
+			frame.add(gui);
+			frame.setLocationRelativeTo(null);
+			frame.setVisible(true);
+			frame.getRootPane().setDefaultButton(gui.sendButton);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-
-		ClientGui gui = new ClientGui();
-
-		JFrame frame = new JFrame("Chat");
-
-		frame.add(gui);
-		frame.setVisible(true);
-		frame.getRootPane().setDefaultButton(gui.sendButton);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(700, 800);
-
-		if (!(gui.getUserName().isEmpty())) {
-			gui.setClient(new Client(gui.getUserName(), 9090));
-		}
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
 	}
 
 }

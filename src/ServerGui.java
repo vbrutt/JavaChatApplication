@@ -74,12 +74,7 @@ public class ServerGui extends JPanel {
 	}
 
 	private void receiveMessage() {
-		userMessage.setText(inputText.getText());
-		Border border = BorderFactory.createLineBorder(Color.BLUE);
-		userMessage.setBorder(border);
-		messagePanel.setVisible(true);
-		inputText.setText("");
-		add(dataPanel, BorderLayout.CENTER);
+
 	}
 
 	public static void main(String[] args) {
@@ -89,18 +84,19 @@ public class ServerGui extends JPanel {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		ServerGui gui = new ServerGui();
-
-		JFrame frame = new JFrame("Chat");
-
-		frame.add(gui);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		frame.getRootPane().setDefaultButton(gui.sendButton);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(700, 800);
+//		ServerGui gui = new ServerGui();
+//
+//		JFrame frame = new JFrame("Chat");
+//
+//		frame.add(gui);
+//		frame.setLocationRelativeTo(null);
+//		frame.setVisible(true);
+//		frame.getRootPane().setDefaultButton(gui.sendButton);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setSize(700, 800);
 
 		Server server = new Server(9090);
+		server.launchServer();
 
 		// server.launchServer();
 		// if (!(gui.getUserName().isEmpty())) {

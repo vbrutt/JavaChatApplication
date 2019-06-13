@@ -17,14 +17,16 @@ public class Client {
 	private static final Logger LOG = Logger.getLogger(Client.class.getName());
 	private InetAddress localHost;
 	private String address;
-	private int port;
+	private String userName;
 
 	public Client(String userName, int port) {
-		this.port = port;
+		this.setUserName(userName);
 		try {
 			localHost = InetAddress.getLocalHost();
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
+			address = localHost.getHostName();
+
+			socket = new Socket(address, port);
+		} catch (IOException e1) {
 			LOG.info(e1.getMessage());
 		}
 
@@ -32,9 +34,6 @@ public class Client {
 
 	protected void sendMessage(String userInput) {
 		try {
-			address = localHost.getHostAddress();
-			socket = new Socket(address, port);
-
 			output = socket.getOutputStream();
 			OutputStreamWriter streamWriter = new OutputStreamWriter(output);
 			BufferedWriter writer = new BufferedWriter(streamWriter);
@@ -47,11 +46,10 @@ public class Client {
 			// Server von dem
 			// anderen Client zu bekommen
 			/**
-			 * input = socket.getInputStream(); InputStreamReader streamReader =
-			 * new InputStreamReader(input); BufferedReader reader = new
-			 * BufferedReader(streamReader); String returnedMessage =
-			 * reader.readLine(); LOG.info("Message from the server: " +
-			 * returnedMessage);
+			 * input = socket.getInputStream(); InputStreamReader streamReader = new
+			 * InputStreamReader(input); BufferedReader reader = new
+			 * BufferedReader(streamReader); String returnedMessage = reader.readLine();
+			 * LOG.info("Message from the server: " + returnedMessage);
 			 */
 
 		} catch (IOException e) {
@@ -63,6 +61,14 @@ public class Client {
 				LOG.info(e.getStackTrace().toString());
 			}
 		}
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	// public static void main(String[] args) {
